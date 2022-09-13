@@ -1,64 +1,90 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+Бэк веб-портала "Ярморка стартапов и проектов".
+В системе предусмотрены роли, исхрдя от них есть доступ к разным функциям.
+В работе используются библеотеки: для разделения по ролям библиотека - Laravel-permission, а для токена - jwt-auth.
+Система была создана для вуза.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Функции:
+Разрабатываемый веб-портал должен обеспечивать возможность выполнения следующих функций:
+1.	авторизация: ввод почты и пароля
+2.	регистрация: ввод личных данных (ФИ(О), эл.почта, телефон, пароль, организация, должность)
+3.	разделение в системе на 6 видов ролей: администратор, студент, куратор, модератор, заказчик, эксперт
+4.	возможность создания нескольких типов проектов: стартап (start up) – новый проект; проблема (problem) – готовый проект, в котором нашли какой-то изъян; задача (task) – готовый проект, который нужно каким-то образом модифицировать.
+5.	наличие у проекта одного из следующих состояний:
+  1.	шаблон – заявка еще не сформирована, её можно редактировать
+  2.	отправлена заявка – заявка отправлена на модерацию
+  3.	в обработке – заявка на модерации
+  4.	на экспертизе – заявка отправлена на экспертизу
+  5.	оценен – экспертиза проведена
+  6.	отправлен кураторам – назначение куратора(-ов)
+  7.	набор участников – производится набор команды
+  8.	в процессе – ведется работа над проектом
+  9.	в архиве – проект помещен в архив (не набралось достаточное кол-во участников, работа над проектом приостановлена)
+  10.	завершён – проект успешно завершен
+  11.	отклонён – заявка отклонена модератором
+6.	после отправки проекта на модерацию и размещения его на портале, редактирование проекта запрещено (для внесения и согласования изменений пользователю необходимо связаться с модератором)
+7.	у каждого пользователя есть возможность (приложение 1):
+  1.	авторизоваться
+  2.	просматривать данные личного кабинета
+  3.	просматривать уведомления
+  4.	просматривать все проекты, в которых ведется набор участников
+  5.	выйти из системы
+  6.	использовать поисковую строку, фильтр, сортировку
+8.	студент в системе (приложение 2):
+  1.	может создавать проекты с типом start up
+  2.	может подписаться на роль в нескольких проектах (не более 10), если его утвердили на роль в одном из проектов, то остальные подписки аннулируются, и студент больше не сможет отписаться от роли в проекте
+  3.	после принятия в проект и до его завершения не может подписываться на участие в других проектах
+  4.	может просматривать свои подписки на проект
+  5.	может просматривать свои проекты
+  6.	может просматривать проекты, в которых принимает участие
+  7.	может просматривать своё портфолио (успешно завершенные проекты, в которых студент принимал участие)
+9.	заказчик в системе (приложение 3):
+  1.	может создавать проекты с любым типом
+  2.	может просматривать свои проекты
+  3.	может редактировать личные данные и сменить пароль
+10.	модератор в системе (приложение 4):
+  1.	может просматривать все заявки, отправленные на модерацию
+  2.	может принять заявку на модерацию
+  3.	может просматривать и редактировать заявки, которые у него на модерации
+  4.	может проводить обработку заявки в несколько этапов:
+    1.	выбор экспертов и отправка заявки на экспертизу
+    2.	просмотр полученных оценок от экспертов. При необходимости отправка на повторную экспертизу
+    3.	выбор кураторов и отправка им заявки на участие в проекте
+    4.	после утверждения кураторов начинается набор участников
+  5.	может отклонить проект на любом этапе обработки заявки
+  6.	может просматривать профиль любого пользователя системы
+  7.	может просматривать проекты, которые в архиве, были завершены, в процессе, были отклонены
+11.	эксперт в системе (приложение 5):
+  1.	может просматривать все заявки, которые направили ему на экспертизу
+  2.	может принять или отклонить заявку, отправленную на экспертизу
+  3.	может просматривать и оценивать заявки (оставить комментарий и предложить возможные роли в проекте), которые у него на экспертизе
+  4.	может просматривать оцененные заявки
+12.	куратор в системе (приложение 6):
+  1.	может просматривать заявки, в которых его выбрали куратором
+  2.	может принять или отклонить заявку, в которой его выбрали куратором
+  3.	может просматривать завершенные проекты, в которых принимал участие
+  4.	может просматривать курируемые проекты
+  5.	после принятия заявки может редактировать проект следующим образом:
+    1.	добавлять/удалять роли в проекте
+    2.	добавлять/удалять цели, задачи и подзадачи
+    3.	просматривать подписки на роль
+    4.	утверждать участников на определенную роль в проекте
+  6.	после начала работы над проектом может выдать каждому участнику задачи
+13.	форма создания проекта содержит следующие поля:
+  1.	название проекта
+  2.	область
+  3.	описание
+  4.	цели, задачи и подзадачи
+  5.	даты начала и окончания реализации проекта
+  6.	вознаграждение
+  7.	команда проекта (добавление ролей: если проект создаёт студент, то он обязан выбрать себе роль; если создает куратор, то его автоматически назначают куратором этого проекта)
 
-## Learning Laravel
+Функциональным назначением программы является предоставление информации о проектах, возможности принятия участия в проектах, возможности создания проекта.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Программу следует использовать в университете города для предоставления необходимой информации.
+Конечными пользователями программы могут являться, как студенты/сотрудники университета, так и лица, не имеющие отношения к университету (партнёры).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Входные данные программы должны быть организованы в виде вводимого в специальную форму текста, соответствующего определенному шаблону. Данные, вводимые вручную, проверяются на корректность после попытки сохранения.
